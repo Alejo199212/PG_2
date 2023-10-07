@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario</title>
+</head>
+<body>
+    <table width="100%">
+        <tr style="background-color: black;color: white;font-size: 14px;text-align: center;vertical-align: middle;font-weight: bold;padding-top: 2px;">
+            <td>Inventario</td>
+        </tr>
+    </table>
+    <table width="100%" style="margin-top: 15px;">
+        <tr style="background-color: black;color: white;font-size: 12px;padding-top: 3px;font-weight: bold;">
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <td>Cantidad</td>
+        </tr>
+        {% for item in inventario%}
+        <tr style="font-size: 12px;padding-top: 3px;border: 1px solid black;text-align: center;">
+            <td>{{item.codigo}}</td>
+            <td>{{item.nombre}}</td>
+            <td>{{item.descripcion}}</td>
+            <td>{{item.cantidad}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

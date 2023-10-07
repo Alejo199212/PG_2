@@ -1,0 +1,72 @@
+<div class="modal fade" id="agregarArticulo" tabindex="-1" aria-labelledby="agregarArticulo" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modal">Agregar articulos a orden</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col mb-3" style="max-height: 300px; overflow-y: auto">
+                        <table class="table" id="seleccionarArticulos">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Existencia</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center align-items-center">
+                        <div class="row">
+                            <div class="d-flex flex-row justify-content-center align-items-center">
+                                <div>
+                                    <p class="px-2">No Orden</p>
+                                </div>
+                                <div>
+                                    <input type="text" id="orden" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-center align-items-center py-3 flex-column">
+                            <div class="col d-flex flex-row justify-content-center align-items-center">
+                                <div>
+                                    <p class="px-2">Cantidad</p>
+                                </div>
+                                <div>
+                                    <input type="number" id="cantidadSeleccionada" />
+                                </div>
+                            </div>
+                            <div class="col d-flex flex-row justify-content-center align-items-center mt-3">
+                                <button class="btn btn-outline-dark mx-2" onclick="enviarArticulo('R');">
+                                    Agregar
+                                </button>
+                                <button class="btn btn-outline-danger mx-2" onclick="enviarArticulo('D');">
+                                    Quitar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <table class="table table-bordered" id="tablaReservados">
+                        <thead>
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th>Cantidad</th>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cerrar
+                </button>
+                <button type="button" class="btn btn-primary" onclick="completarEvento();">
+                    Completar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

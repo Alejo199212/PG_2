@@ -1,0 +1,94 @@
+{%extends 'base.html'%}
+
+{% block title%}Clientes{%endblock%}
+{% block extra_scripts %}
+{{ block.super }}
+<script src="../static/js/clientes.js"></script>
+{% endblock %}
+
+{% block content %}
+
+
+<div>
+    <div class="d-flex justify-content-end pb-3">
+        {% if perms.clientes.add_clientes %}
+        <button class="btn btn-success" onclick="abrirModal('I');"></button>
+        <span class="mx-1"><i class="fa-solid fa-plus"></i></span>Agregar</button>
+        {% endif %}
+            </div>
+    {% if perms.clientes.view_clientes %}             
+    <table id="table">
+        <thead class="table-dark bg-dark">
+            <tr>
+                <th>Cod Cliente</th>
+                <th>Nit</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Fecha Registro</th>
+                <th>Correo</th>
+                <th>Telefono</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+    </table>
+    {% endif %}
+</div>
+<div class="modal fade" id="modalClientes" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" id="headerMondal">
+                <h5 class="modal-title" id="modalCliente">Formulario Clientes</h5>
+                <button type="button" class="btn btn-outline-danger" onclick="cerrarModal();">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formularioCliente">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" id="tipo" name="tipo">
+                    </div>
+                    <div class="form-group" id="groupCodCliente">
+                        <label for="codCliente">Cod Cliente</label>
+                        <input type="text" class="form-control" id="codCliente" placeholder="Codigo Cliente" name="codCliente">
+                    </div>
+                    <div class="form-group">
+                        <label for="nit">Nit</label>
+                        <input type="text" class="form-control" id="nit" placeholder="Nit" name="nit">
+                    </div>
+                    <div class="form-group">
+                        <label for="nombres">Nombres</label>
+                        <input type="text" class="form-control" id="nombres" placeholder="Nombres" name="nombres">
+                    </div>
+                    <div class="form-group">
+                        <label for="apellidos">Apellidos</label>
+                        <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" name="apellidos">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo" id="labelCorreo">Correo</label>
+                        <input type="text" class="form-control" id="correo" placeholder="Correo" name="correo">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono" id="labelTelefono">Telefono</label>
+                        <input type="text" class="form-control" id="telefono" placeholder="Telefono" name="telefono">
+                    </div>
+                    <div class="form-group" id="groupDireccion">
+                        <label for="direccion" id="labelDireccion">Direccion</label>
+                        <input type="text" class="form-control" id="direccion" placeholder="Direccion" name="direccion">
+                    </div>
+                    <div id="divLeyendaEliminar">
+                        <h4>Esta seguro de eliminar este cliente?</h4>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    onclick="cerrarModal();">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="modificarCliente();" id="btnConfirmar"><span
+                        id="btnTitulo">Guardar</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

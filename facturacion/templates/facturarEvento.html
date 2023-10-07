@@ -1,0 +1,187 @@
+{% extends 'base.html'%}
+
+{% block title%}Facturar Evento {%endblock%}
+
+{% block extra_scripts %}
+{% load static %}
+{{ block.super }}
+<script src="{% static 'js/index.js' %}"></script>
+<script>
+  let listReservados = "{% url 'listaArticulosReservados' %}"
+</script>
+{% endblock %}
+
+{% block content %}
+<div>
+  <table id="table">
+    {% csrf_token %}
+    <thead class="table-dark bg-dark">
+      <tr>
+        <th>Codigo Cliente</th>
+        <th>Nit</th>
+        <th>Nombre</th>
+        <th>Evento</th>
+        <th>Nombre Evento</th>
+        <th>Accion</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+
+
+<div class="modal fade" id="modalEvento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Facturar Evento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="sladerFactura" class="carousel slide">
+          <div class="carousel-inner">
+            <div>
+              <input type="hidden" id="user" value="{{user.id}}">
+              <input type="hidden" id="articulosBaja">
+            </div>
+            <div class="text-center p-4">
+              <span class="mx-2">Numero de orden:</span><input type="text" id="ordenNo" disabled>
+            </div>
+            <div class="carousel-item active">
+              
+              <div class="p-4 text-center">
+                <h5>Marque los articulos devueltos por el cliente</h5>
+              </div>
+              <table id="asignados" width="70%">
+                <thead class="table-dark bg-dark">
+                  <tr>
+                    <th></th>
+                    <th>Codigo Producto</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Editar Cantidad</th>
+                  </tr>
+                </thead>
+              </table>
+
+              <div class="text-center p-5">
+                <button type="button" class="btn btn-outline-success"
+                  onclick="listaArticulosDevueltos();">Siguiente</button>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div>
+                <div class="border border-1 rounded-3 p-5" style="width: 90%;margin: auto;">
+                    <div class="d-flex flex-row justify-content-start">
+                      <div class="mb-3 me-5">
+                        <label for="nit" class="form-label">Nit</label>
+                        <input type="text" class="form-control" id="nit" name="nit">
+                      </div>
+                      <div class="mb-3">
+                        <label for="nit" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre">
+                      </div>
+                    </div>
+                    <div>
+                      <div class="mb-3">
+                        <label for="direccion" class="form-label">Direccion</label>
+                        <input type="text" class="form-control" id="direccion" name="direccion">
+                      </div>
+                    </div>
+                </div>
+                <div>
+                  <table id="detalleFactura" style="width: 90%;margin: auto;">
+                    <thead class="table-dark bg-dark">
+                      <tr>
+                        <th>Cantidad</th>
+                        <th>Codigo</th>
+                        <th>Descripcion</th>
+                        <th>Tipo</th>
+                        <th>Abono</th>
+                        <th>Pendiente</th>
+                        <th>P. unidad</th>
+                        <th>Total</th>
+                        <th>Editar</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="facturar()">Facturar</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="editarCantidad" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ingrese cantidad</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="flex flex-column justify-content-center">
+            <input type="hidden" id="indiceCantidad">
+            <input type="number" id="numerCantidad">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" onclick="cambiar();">Cambiar Cantidad</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalPrecio" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ingrese el precio por unidad incluyendo iva</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="flex flex-column justify-content-center">
+            <input type="hidden" id="indicePrecio">
+           <div>
+            <label for="cantidad" class="form-label">Cantidad</label>
+            <input type="number" id="numeroPrecioCantidad" disabled>
+           </div>
+          <div>
+            <label for="precio" class="form-label">Precio</label>
+            <input type="number" id="numeroPrecio" placeholder="Precio">
+          </div>
+            <div>
+              <label for="Descripcion" class="form-label">Descripcion</label>
+            <input type="text" id="descripcionProducto" placeholder="Descripcion">
+            </div>
+            <div>
+              <label for="cb" class="form-label">Tipo</label>
+              <select name="tipo" id="tipo">
+                <option selected>Seleccione un tipo</option>
+                <option value="B">Bien</option>
+                <option value="S">Servicio</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" onclick="cambiarPrecio();">Guardar Precio</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

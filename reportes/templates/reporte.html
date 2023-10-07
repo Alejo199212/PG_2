@@ -1,0 +1,87 @@
+{% extends 'base.html'%}
+
+{% block title%}Reportes {%endblock%}
+{% block extra_scripts %}
+{% load static %}
+
+{{ block.super }}
+<script src="{% static 'js/indexReporte.js' %}"></script>
+{% endblock %}
+
+{%block content%}
+
+<div class="d-flex flex-row justify-content-center m-4">
+  <a class="text-decoration-none" onclick="abrirModal('articulosDeBajaReporte/','Articulos de Baja','B');">
+    <div class="card border-primary mb-3 mx-2" style="max-width: 18rem">
+      <div class="card-body text-primary d-flex flex-row justify-content-center align-items-center">
+        <div class="m-2">
+          <i class="fas fa-download"></i>
+        </div>
+        <div class="m-2 d-flex flex-column justify-content-center align-items-center">
+          <span class="fw-bold">Artículos de Baja</span>
+        </div>
+      </div>
+    </div>
+  </a>
+  <a class="text-decoration-none" onclick="abrirModal('compraArticulos/','Compra de Artículos','C');">
+    <div class="card border-primary mb-3 mx-2" style="max-width: 18rem">
+      <div class="card-body text-primary d-flex flex-row justify-content-center align-items-center">
+        <div class="m-2">
+          <i class="fas fa-shopping-cart"></i>
+        </div>
+        <div class="m-2 d-flex flex-column justify-content-center align-items-center">
+          <span class="fw-bold">Compra de Artículos</span>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <a class="text-decoration-none" onclick="abrirModal('articulosInventario/','Obtener Inventario','I');">
+    <div class="card border-primary mb-3 mx-2" style="max-width: 18rem">
+      <div class="card-body text-primary d-flex flex-row justify-content-center align-items-center">
+        <div class="m-2">
+          <i class="fas fa-cubes"></i>
+        </div>
+        <div class="m-2 d-flex flex-column justify-content-center align-items-center">
+          <span class="fw-bold">Inventario</span>
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+
+
+<div class="modal fade" id="reporte" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Reportes</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% csrf_token %}
+        <input type="hidden" id="url">
+        <div>
+          <div id="tituloLabel" class="text-center fw-bold fs-2">
+
+          </div>
+          <div id="fechas">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Desde</label>
+              <input type="date" class="form-control" id="inicio" placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Hasta</label>
+              <input type="date" class="form-control" id="hasta" placeholder="name@example.com">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" onclick="verReportes();">Consultar</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

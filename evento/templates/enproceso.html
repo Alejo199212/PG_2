@@ -1,0 +1,41 @@
+{% extends 'base.html'%}
+
+{% block title%}Ordenes de evento en proceso {%endblock%}
+
+{% block extra_scripts %}
+{% load static %}
+{{ block.super }}
+
+<script src="{% static 'js/enproceso.js' %}"></script>
+<script src="{% static 'js/eventos.js' %}"></script>
+<script>
+    let urlArticulos = "{% url 'listArticulos' %}"
+    let reservarArticulo = "{% url 'reservarArticulo' %}"
+    let quitarArticulo = "{% url 'quitarArticulo'%}"
+    let completar = "{% url 'completarOrden' %}"
+    let listReservados = "{% url 'listaArticulosReservados' %}"
+    let flagVentana = "proceso"
+    let ulrAnular = "{% url 'anularEvento' %}"
+    let listarEventos = true
+</script>
+{% endblock %}
+
+{%block content%}
+<div>
+
+    <table id="table">
+        {% csrf_token %}
+        <thead class="table-dark bg-dark">
+            <tr>
+                <th>Codigo Cliente</th>
+                <th>Nombre</th>
+                <th>Evento</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+{% include 'modal.html'%}
+{%endblock%}

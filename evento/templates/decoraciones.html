@@ -1,0 +1,149 @@
+{% extends 'base.html'%}
+
+{% block title%}Generar Evento {%endblock%}
+
+{% block extra_scripts %}
+{% load static %}
+{{ block.super }}
+<script src="{% static 'js/eventos.js' %}"></script>
+<script>
+    let urlArticulos = "{% url 'listArticulos' %}"
+    let reservarArticulo = "{% url 'reservarArticulo' %}"
+    let quitarArticulo = "{% url 'quitarArticulo'%}"
+    let completar = "{% url 'completarOrden' %}"
+    let listReservados = "{% url 'listaArticulosReservados' %}"
+    let clientes = "{% url 'listClient' %}"
+    let flagVentana = "evento"
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="w-100 bg-white h-100 d-flex column justify-content-center align-items-center">
+    <div id="generarEvento" class="carousel slide w-100 flex-row" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="w-100 d-flex justify-content-center align-items-center">
+                    <form style="width: 50%;">
+                        {% csrf_token %}
+                        <div class="fs-2 text mb-3 text-center fw-bold">Seleccionar cliente</div>
+                        <div class="form-group">
+                            <table id="tableClientes">
+                                <thead class="table-dark bg-dark">
+                                    <tr>
+                                        <th>Cod Cliente</th>
+                                        <th>Nit</th>
+                                        <th>Nombre</th>
+                                        <th>Apellidos</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-outline-dark"
+                                    onclick="cambiarSiguiente()">Siguiente</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="w-100 d-flex">
+                    <div class="w-100">
+                        <div class="p-1">
+                            <div class="form-group ">
+                                <label for="nitCL" class="pe-4 fw-bold fs-6 text">Codigo de Cliente:</label>
+                                <input type="text" class="form-control w-30" id="nitc" name="nitC" disabled>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="w-100">
+                        <div class="p-1">
+                            <div class="form-group">
+                                <label for="nombreEventos" class="px-2 fw-bold fs-6 text">Nombre de Evento:</label>
+                                <input type="text" class="form-control" id="nombreEvento" name="nombreEvento">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-100 d-flex">
+                    <div class="w-100">
+                        <div class="p-1">
+                            <div class="form-group">
+                                <label for="descripciones" class="pe-4 fw-bold fs-6 text">Descripción:</label>
+                                <input type="text" class="form-control w-30" id="descripcion" name="descripcion">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="w-100">
+                        <div class="p-1">
+                            <div class="form-group">
+                                <label for="abonos" class="px-2 fw-bold fs-6 text">Abono:</label>
+                                <input type="text" class="form-control" id="abono" name="abono">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-100 d-flex">
+                    <div class="w-100">
+                        <div class="p-1 d-flex">
+                            <div class="form-group w-50 pe-2">
+                                <label for="precios" class="pe-4 fw-bold fs-6 text">Precio:</label>
+                                <input type="text" class="form-control w-30" id="precio" name="precio">
+                            </div>
+                            <div class="w-50 pl-2">
+                                <label for="vehiculo" class="pe-4 fw-bold fs-6 text">Seleccionar Vehiculo:</label>
+                                <select class="form-select" aria-label="Default select example" id="selectVehiculos">
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-100">
+                        <div class="p-1 d-flex">
+                            <div class="form-group me-4 w-50">
+                                <label for="direcciones" class="px-2 fw-bold fs-6 text">Direccion de Entrega</label>
+                                <input type="text" class="form-control" id="direccion" name="direccion">
+                            </div>
+                            <div class="form-group">
+                                <label for="fechaEntregas" class="px-2 fw-bold fs-6 text">Fecha de Entrega</label>
+                                <input type="date" class="form-control" id="fechaEntrega" name="fechaEntrega">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-100 d-flex">
+                    <div class="w-100">
+                        <div class="p-1">
+                            <div class="form-group">
+                                <label for="fechaInicios" class="pe-4 fw-bold fs-6 text">Fecha Inicio:</label>
+                                <input type="date" class="form-control w-30" id="fechaInicio" name="fechaInicio">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="w-100">
+                        <div class="p-1">
+                            <div class="form-group">
+                                <label for="fechaFins" class="px-2 fw-bold fs-6 text">Fecha Fin:</label>
+                                <input type="date" class="form-control" id="fechaFin" name="fechaFin">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="d-flex justify-content-center align-items-center m-2">
+                        <button type="button" class="btn btn-outline-danger" onclick="retroceder();">Atras</button>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center m-2">
+                        <button type="button" class="btn btn-outline-success" onclick="enviarEvento();">Generar
+                            Evento</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'modal.html'%}
+    {% endblock %}

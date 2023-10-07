@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra de Artículos</title>
+</head>
+<body>
+    <table width="100%">
+        <tr style="background-color: black;color: white;font-size: 14px;text-align: center;vertical-align: middle;font-weight: bold;padding-top: 2px;">
+            <td>Compra de Artículos</td>
+        </tr>
+    </table>
+    <table width="100%" style="margin-top: 15px;">
+        <tr style="background-color: black;color: white;font-size: 12px;padding-top: 3px;font-weight: bold;">
+            <th>Número</th>
+            <th>Serie</th>
+            <th>Código</th>
+            <td>Nombre</td>
+            <th>Precio U.</th>
+            <th>Cantidad</th>
+            <th>Fecha de Registro</th>
+            <th>Usuario</th>
+        </tr>
+        {% for item in articulos%}
+        <tr style="font-size: 12px;padding-top: 3px;border: 1px solid black;text-align: center;">
+            <td>{{item.numFact}}</td>
+            <td>{{item.serie}}</td>
+            <td>{{item.codigo}}</td>
+            <td>{{item.nombre}}</td>
+            <td>{{item.precio}}</td>
+            <td>{{item.cantidad}}</td>
+            <td>{{item.fecha}}</td>
+            <td>{{item.usuario}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

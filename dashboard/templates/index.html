@@ -1,0 +1,94 @@
+{% extends 'base.html'%} {% block title%}Dashboard{%endblock%}
+ {% block extra_scripts %} 
+{{ block.super }}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    let datos = "{{graficaLineal|safe}}"
+    let datosJson = JSON.parse(datos);
+    
+    let ctx = document.getElementById("garficarEventoPorMes").getContext("2d");
+    let chart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: ["ENE", "FEB", "MAR", "ABR", "MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"],
+            datasets: [
+                {
+                    label: "Eventos por Mes",
+                    data: datosJson,
+                    backgroundColor: "rgba(0, 170, 228, 0.2)",
+                    borderColor: "rgba(0, 170, 228, 1)",
+                    borderWidth: 1,
+                },
+            ],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
+</script>
+{%endblock%} 
+
+{% block content %}
+
+<div class="w-100 bg-white h-100 d-flex flex-column justify-content-start align-items-center p-4">
+    <div class="d-flex flex-row">
+        <div class="card border-primary mb-3 mx-2" style="max-width: 18rem">
+            <div class="card-body text-primary d-flex flex-row justify-content-center align-items-center">
+                <div class="m-2">
+                    <span class="fw-bold fs-1"><i class="fas fa-user"></i></span>
+                </div>
+                <div class="m-2 d-flex flex-column justify-content-center align-items-center">
+                    <span class="fw-bold">Cantidad de Clientes</span>
+                    <span class="fw-bold fs-2">{{clientes}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-success mb-3 mx-2" style="max-width: 18rem">
+            <div class="card-body text-success d-flex flex-row justify-content-center align-items-center">
+                <div class="m-2">
+                    <span class="fw-bold fs-1"><i class="fas fa-car"></i></span>
+                </div>
+                <div class="m-2 d-flex flex-column justify-content-center align-items-center">
+                    <span class="fw-bold">Cantidad de Entregas</span>
+                    <span class="fw-bold fs-2">{{cantidadEntrega}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-danger mb-3 mx-2" style="max-width: 18rem">
+            <div class="card-body text-danger d-flex flex-row justify-content-center align-items-center">
+                <div class="m-2">
+                    <span class="fw-bold fs-1"><i class="fas fa-handshake-slash"></i></span>
+                </div>
+                <div class="m-2 d-flex flex-column justify-content-center align-items-center">
+                    <span class="fw-bold">Eventos Anulados</span>
+                    <span class="fw-bold fs-2">{{cantidadAnulados}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="card border-info mb-3 mx-2" style="max-width: 18rem">
+            <div class="card-body text-info d-flex flex-row justify-content-center align-items-center">
+                <div class="m-2">
+                    <span class="fw-bold fs-1"><i class="fas fa-boxes"></i></span>
+                </div>
+                <div class="m-2 d-flex flex-column justify-content-center align-items-center">
+                    <span class="fw-bold">Total Articulos</span>
+                    <span class="fw-bold fs-2">{{inventario}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="width: 70%; margin-top: 20px">
+        <canvas id="garficarEventoPorMes"></canvas>
+    </div>
+</div>
+
+{%endblock%}

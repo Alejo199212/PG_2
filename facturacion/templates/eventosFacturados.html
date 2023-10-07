@@ -1,0 +1,31 @@
+{% extends 'base.html'%}
+
+{% block title%}Facturas {%endblock%}
+
+{% block extra_scripts %}
+{% load static %}
+{{ block.super }}
+<script src="{% static 'js/facturados.js' %}"></script>
+<script>
+  let listReservados = "{% url 'listaArticulosReservados' %}"
+</script>
+{% endblock %}
+
+{% block content %}
+<div>
+  <table id="tableFacturados">
+    {% csrf_token %}
+    <thead class="table-dark bg-dark">
+      <tr>
+        <th>Codigo Evento</th>
+        <th>Nit</th>
+        <th>Nombre</th>
+        <th>Numero Interno</th>
+        <th>Numero Factura</th>
+        <th>Serie</th>
+        <th>Accion</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+{% endblock %}

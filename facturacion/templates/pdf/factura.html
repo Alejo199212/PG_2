@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .franja {
+            width: 100%;
+            height: 25px;
+            background-color: rgb(255, 115, 0);
+        }
+
+        .encabezado {
+            display: flex;
+            justify-content: space-between;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 30px;
+        }
+
+        .datosCliente .nombre {
+            font-weight: bold;
+            font-size: 20px;
+            padding: 5px;
+        }
+
+        .datosCliente .direccion,
+        .correo {
+            font-size: 16px;
+            padding: 5px;
+        }
+
+        .factura {
+            padding: 5px;
+            border-bottom: 1px solid rgba(224, 224, 224, 0.663);
+        }
+
+        .encabezadoFondo {
+            background-color: #f7f3f3;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <table width="100%">
+        <tr>
+            <td colspan="2" style="background-color: rgb(255, 115, 0); height: 25px;"></td>
+        </tr>
+    </table>
+    <table width="85%">
+        <tr>
+            <td style="text-align: left; font-size: 16px;padding-top:15px ;" colspan="2">Decoraciones Willy</td>
+            <td></td>
+            <td style="text-align: left;  font-size: 12px;font-weight: bold;">Factura</td>
+        </tr>
+        <tr>
+            <td style="text-align: left; font-size: 12px;" colspan="2">Direccion: 2 calle 3-64 zona 16</td>
+            <td></td>
+            <td style="text-align:left;  font-size: 12px;">
+                <p>Fecha: {{fecha}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left; font-size: 12px;" colspan="2">Telefono: 22445565</td>
+            <td></td>
+            <td style="text-align: left;  font-size: 12px;">
+                <p>Factura No. {{referencia}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left; font-size: 12px;" colspan="2">Correo: decora@gmail.com</td>
+            <td></td>
+            <td style="text-align: left; font-size: 12px;">
+                <p>Serie. {{serie}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+            <td></td>
+            <td style="text-align: left;  font-size: 12px;">
+                <p>Numero FEL. {{numero}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+            <td></td>
+            <td style="text-align:left;  font-size: 12px;">
+                <p>No Autorización. {{numeroAutorizacionFact}}</p>
+            </td>
+        </tr>
+    </table>
+    <table style="margin-top: 15px;margin-bottom: 15px;" width="100%">
+        <tr>
+            <td colspan="2"
+                style="padding-top: 5px;color: white; background-color: rgb(255, 115, 0); height: 25px; text-align: center;font-size: 18px; font-weight: bold;">
+                Informacion Del Cliente</td>
+        </tr>
+        <tr>
+            <td
+                style="border: 1px solid black;padding-top: 5px;padding-left: 5px; text-align: left;vertical-align: middle;border-radius: 5px;">
+                Nombre: {{nombreFact}}</td>
+            <td
+                style="border: 1px solid black;padding-top: 5px;padding-left: 5px; text-align: left;vertical-align: middle;border-radius: 5px;">
+                Nit: {{nit}}</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black;padding-top: 5px;padding-left: 5px; text-align: left;vertical-align: middle;border-radius: 5px;"
+                colspan="2"> Direccion: {{direccionFact}}</td>
+        </tr>
+    </table>
+    <table width="100%">
+        <tr style="background-color: black;color: white; font-weight: bold;">
+            <th style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;">Cantidad
+            </th>
+            <th style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;"></th>
+            <th style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;"></th>
+            <th style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;">Descripcion
+            </th>
+            <th style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;"></th>
+            <th style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;"></th>
+            <th style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;">Precio U.
+            </th>
+            <th style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;">Total</th>
+        </tr>
+        {% for item in producto %}
+        <tr>
+            <td style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;">
+                {{item.cantidad}}</td>
+            <td style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;" colspan="5">
+                {{item.descripcion}}</td>
+            <td style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;">
+               Q {{item.precioU}}</td>
+            <td style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;">
+               Q {{item.total}}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td style="border: 1px solid black;padding-top: 5px;text-align: left;vertical-align: middle;padding-left: 5px;"
+                colspan="7">Total</td>
+            <td style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;">
+                Q {{totalFactura}}</td>
+        </tr>
+    </table>
+
+    <table width="100%" style="margin-top: 20px;">
+        <tr>
+            <td style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;" colspan="8">
+                Sujeto a pagos trimestrales ISR</td>
+        </tr>
+        <tr style="padding-top: 5px;color: white; background-color: rgb(255, 115, 0); height: 25px; text-align: center;font-size: 18px; font-weight: bold;">
+            <td style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;" colspan="8">
+                Datos Del Certificador</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;" colspan="4">
+                NIT Del Contribuyente</td>
+
+            <td style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;" colspan="4">
+                Nombre, razón o denominación social del contribuyente</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;" colspan="4">
+                56407734</td>
+
+            <td style="border: 1px solid black;padding-top: 5px;text-align: center;vertical-align: middle;" colspan="4">
+                GUATEFACTURAS SOCIEDAD ANONIMA</td>
+        </tr>
+    </table>
+</body>
+
+</html>

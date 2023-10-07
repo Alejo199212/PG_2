@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+
+{% block title%}Ordenes de evento completadas {%endblock%}
+
+{% block extra_scripts %}
+{% load static %}
+{{ block.super }}
+<script src="{% static 'js/completadas.js' %}"></script>
+<script src="{% static 'js/enproceso.js' %}"></script>
+<script>
+    let ulrAnular = "{% url 'anularEvento' %}"
+    let listarEventos = false
+</script>
+{% endblock %}
+
+{%block content%}
+<div>
+
+    <table id="table">
+        {% csrf_token %}
+        <thead class="table-dark bg-dark">
+            <tr>
+                <th>Nit</th>
+                <th>Nombre Cliente</th>
+                <th>Evento</th>
+                <th>Nombre Evento</th>
+                <th>Vehiculo asignado</th>
+                <th>Direccion Entrega</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+{% include 'modal.html'%}
+{%endblock%}

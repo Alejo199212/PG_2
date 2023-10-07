@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evento</title>
+</head>
+<body>
+    <table width="100%">
+        <tr style="padding: 5px;"  width="100%">
+            <td style="text-align: left; font-size: 16px;padding: 5px;">Decoraciones Willy</td>
+            
+            <td style="text-align: right;  font-size: 18px;padding: 5px;">Evento NO</td>
+        </tr>
+        <tr  width="100%">
+         <td style="padding: 5px;"></td>
+       
+         <td style="text-align: right;  font-size: 18px;padding: 5px;">{{codigoEvento}}</td>
+        </tr>
+     </table>
+
+     <table  width="100%">
+        <tr>
+           
+            <td style="text-align: center;background-color: black;color: white;font-weight: bold;font-size: 18px;padding-top: 2px;" colspan="3">Información del cliente</td>
+            
+        </tr>
+        <tr>
+            <td width="100%"  style="padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px; border:1px solid black"><strong>Nombre:</strong>{{cliente}}</td>
+            <td width="100%"  style="padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px; border:1px solid black"><strong>Codigo:</strong>{{codigo_cliente}}</td>
+            <td width="100%"  style="padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px; border:1px solid black"><strong>Nit:</strong> {{nit}}</td>
+        </tr>
+     </table>
+     <table  width="100%" style="margin-top: 20px;">
+        <tr>
+           
+            <td style="text-align: center;background-color: black;color: white;font-weight: bold;font-size: 18px;padding-top: 2px;" colspan="5">Información del Evento</td>
+            
+        </tr>
+        <tr style="padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px;">
+            <td colspan="2" style="border:1px solid black;"><strong> Nombre de Evento: </strong>{{nombre_evento}}</td>
+            <td colspan="3" style="text-align: justify;padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px; border:1px solid black"><strong>Descripcion del Evento:</strong> {{descripcion}} </td>
+        </tr>
+     </table>
+     <table width="100%">
+        <tr style="padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px;">
+            <td width="100%"  style="padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px; border:1px solid black"><strong>Precio:</strong> Q {{precio}}</td>
+            <td width="100%"  style="padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px; border:1px solid black"><strong>Abonado</strong> Q {{abonado}}</td>
+            <td width="100%"  style="padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px; border:1px solid black"><strong>Entrega</strong> {{entrega}}</td>
+            <td width="100%"  style="padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px; border:1px solid black"><strong>Termina</strong> {{Termina}}</td>
+          </tr>
+     </table>
+
+     <table width="100%" style="margin-top: 20px;">
+        <tr>
+           
+            <td style="text-align: center;background-color: black;color: white;font-weight: bold;font-size: 18px;padding-top: 1px;" colspan="5">Articulos Asignados</td>
+            
+        </tr>
+     </table>
+     <table width="100%" style="margin-top: 15px;">
+        <tr>
+            <th style="padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px; border:1px solid black;background-color: black;color: white;">Codigo</th>
+            <th style="padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px; border:1px solid black;background-color: black;color: white;">Nombre</th>
+            <th style="padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px; border:1px solid black;background-color: black;color: white;">Cantidad</th>
+        </tr>
+        {% for item in articulos %}
+        <tr>
+            <td style="padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px; border:1px solid black;text-align: center;">{{item.codigo}}</td>
+            <td style="padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px; border:1px solid black;text-align: center;">{{item.nombre}}</td>
+            <td style="padding-top: 5px; padding-left: 4px;padding-right: 4px; font-size: 12px; border:1px solid black;text-align: center;">{{item.cantidad}}</td>
+        </tr>
+        {% endfor %}
+     </table>
+
+</body>
+</html>

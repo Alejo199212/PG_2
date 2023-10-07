@@ -1,0 +1,80 @@
+{% extends 'base.html'%}
+{% block extra_scripts %}
+{{ block.super }}
+<script src="../static/js/vehiculos.js"></script>
+{% endblock %}
+
+{% block title%}Vehiculos {%endblock%}
+
+{% block content %}
+<div>
+    <div class="d-flex justify-content-end pb-3"><button class="btn btn-success" onclick="abrirModal('I');"><span
+                class="mx-1"><i class="fa-solid fa-plus"></i></span>Agregar</button></div>
+    <table id="table">
+        <thead class="table-dark bg-dark">
+            <tr>
+                <th>Id</th>
+                <th>Tipo</th>
+                <th>Modelo</th>
+                <th>Marcas</th>
+                <th>Placas</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<div class="modal fade" id="modalClientes" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" id="headerMondal">
+                <h5 class="modal-title" id="modalCliente">Formulario Vehiculos</h5>
+                <button type="button" class="btn btn-outline-danger" onclick="cerrarModal();">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formularioCliente">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" id="tipo" name="tipo">
+                    </div>
+                    <div class="form-group" id='datosID'>
+                        <label for="id_label">Id</label>
+                        <input type="text" class="form-control" id="id" placeholder="Id" name="id">
+                    </div>
+                    <div id="inputs">
+                        <div class="form-group">
+                            <label for="tipov">Tipo Vehiculo</label>
+                            <input type="text" class="form-control" id="tipov" placeholder="Tipo Vehiculo" name="tipov">
+                        </div>
+                        <div class="form-group">
+                            <label for="modelo">Modelo</label>
+                            <input type="text" class="form-control" id="modelo" placeholder="Modelo" name="modelo">
+                        </div>
+                        <div class="form-group">
+                            <label for="marca" id="labelCorreo">Marca</label>
+                            <input type="text" class="form-control" id="marca" placeholder="Marca" name="marca">
+                        </div>
+                        <div class="form-group">
+                            <label for="placa" id="labelTelefono">Placas</label>
+                            <input type="text" class="form-control" id="placa" placeholder="Placa" name="placa">
+                        </div>
+                    </div>
+                    <div id="divLeyendaEliminar">
+                        <h4 id="leyenda">Esta seguro de desactivar este vehiculo?</h4>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    onclick="cerrarModal();">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="modificarVehiculo();" id="btnConfirmar"><span
+                        id="btnTitulo">Guardar</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
